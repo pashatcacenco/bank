@@ -90,6 +90,8 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
+// The account movements
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   
@@ -109,23 +111,30 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
-const checkDogs = function (dogsJulia, dogsKate) {
-  const copyDogsJulia = dogsJulia.slice();
-  copyDogsJulia.splice(0, 1);
-  copyDogsJulia.splice(-2);
-  const allDogs = [...copyDogsJulia, ...dogsKate];
-  allDogs.forEach(function (dog, i) {
-    dog < 3 ? console.log(`Dog number ${i + 1} is a puppy age is ${dog} years`) : console.log(`Dog number ${i + 1} is an adult age is ${dog} years`);
-  });
+// The account balance
+
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
 }
-console.log('Ex 1 ---------------');
-checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 
-console.log('Ex 2 ---------------');
-checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   const copyDogsJulia = dogsJulia.slice();
+//   copyDogsJulia.splice(0, 1);
+//   copyDogsJulia.splice(-2);
+//   const allDogs = [...copyDogsJulia, ...dogsKate];
+//   allDogs.forEach(function (dog, i) {
+//     dog < 3 ? console.log(`Dog number ${i + 1} is a puppy age is ${dog} years`) : console.log(`Dog number ${i + 1} is an adult age is ${dog} years`);
+//   });
+// }
+// console.log('Ex 1 ---------------');
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 
-const withdrawals = movements.filter(mov => mov < 0);
+// console.log('Ex 2 ---------------');
+// checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 
-console.log(withdrawals);
+// const withdrawals = movements.filter(mov => mov < 0);
+
+// console.log(withdrawals);
 
 
