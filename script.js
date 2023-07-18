@@ -118,6 +118,8 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance} EUR`;
 }
 
+calcDisplayBalance(account1.movements);
+
 // const checkDogs = function (dogsJulia, dogsKate) {
 //   const copyDogsJulia = dogsJulia.slice();
 //   copyDogsJulia.splice(0, 1);
