@@ -120,6 +120,12 @@ const calcDisplayBalance = function (movements) {
 
 calcDisplayBalance(account1.movements);
 
+// Maximum value from movements
+
+const max = movements.reduce((acc, mov) => acc > mov ? acc: mov, movements[0]);
+
+console.log(max);
+
 // const checkDogs = function (dogsJulia, dogsKate) {
 //   const copyDogsJulia = dogsJulia.slice();
 //   copyDogsJulia.splice(0, 1);
