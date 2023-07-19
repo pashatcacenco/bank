@@ -111,6 +111,34 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+
+// CALC DISPLAY SUMMARY
+
+const calcDisplaySumary = function (movements) {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`
+}
+
+const interest = movements
+  .filter(mov => mov > 0)
+  .map(deposit => deposit * 1.2 / 100)
+  .filter((int, i, arr) => {
+    console.log(arr);
+    return int >= 1;
+})
+  .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumInterest.textContent = `${interest}€`
+calcDisplaySumary(account1.movements);
+
+// CALC DISPLAY SUMMARY OUT balace
+
+const calcDisplaySumaryOut = function (movements) {
+  const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`
+}
+calcDisplaySumaryOut(account1.movements);
+
 // The account balance
 
 const calcDisplayBalance = function (movements) {
@@ -151,11 +179,24 @@ console.log(max);
 let humanAge = 0;
 
 const doginHumanAge = function (dogages) {
-  const dogAgeToHuman = dogages.map(dogage => dogage <= 2 ?
-    humanAge = 2 * dogage : humanAge = 16 + dogage * 4).filter(age => age >= 18);
-  const dogAgeToHumanAv = dogAgeToHuman.reduce((av, cur) => (av + cur)/dogAgeToHuman.length);  
-
-  return dogAgeToHumanAv;
+  const dogAgeToHuman = dogages
+    .map(dogage => dogage <= 2 ?
+      humanAge = 2 * dogage : humanAge = 16 + dogage * 4)
+    .filter(age => age >= 18)
+    .reduce((av, cur, i, arr) => av + cur / arr.length, 0);
+  
+  return dogAgeToHuman;
 }
 
-console.log(doginHumanAge([4, 2, 1, 6, 8, 2, 4]));
+console.log(doginHumanAge([5,2,4,1,15,8,3]));
+
+// convert Euro to USD
+
+const euroToUsd = 1.1;
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * euroToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+// console.log(totalDepositsUSD);
+
+
