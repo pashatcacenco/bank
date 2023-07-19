@@ -146,3 +146,16 @@ console.log(max);
 // console.log(withdrawals);
 
 
+// Calceulate the dog age in human age using map,reduce,filter
+
+let humanAge = 0;
+
+const doginHumanAge = function (dogages) {
+  const dogAgeToHuman = dogages.map(dogage => dogage <= 2 ?
+    humanAge = 2 * dogage : humanAge = 16 + dogage * 4).filter(age => age >= 18);
+  const dogAgeToHumanAv = dogAgeToHuman.reduce((av, cur) => (av + cur)/dogAgeToHuman.length);  
+
+  return dogAgeToHumanAv;
+}
+
+console.log(doginHumanAge([4, 2, 1, 6, 8, 2, 4]));
