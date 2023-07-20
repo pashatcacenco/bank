@@ -117,9 +117,8 @@ displayMovements(account1.movements);
 const calcDisplaySumary = function (movements) {
   const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`
-}
-
-const interest = movements
+  //interest summary
+  const interest = movements
   .filter(mov => mov > 0)
   .map(deposit => deposit * 1.2 / 100)
   .filter((int, i, arr) => {
@@ -129,6 +128,9 @@ const interest = movements
   .reduce((acc, mov) => acc + mov, 0);
 
   labelSumInterest.textContent = `${interest}€`
+}
+
+
 calcDisplaySumary(account1.movements);
 
 // CALC DISPLAY SUMMARY OUT balace
@@ -154,6 +156,37 @@ const max = movements.reduce((acc, mov) => acc > mov ? acc: mov, movements[0]);
 
 console.log(max);
 
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  // prevent form from submititng
+  e.preventDefault();
+  
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI a welcome message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+
+    containerApp.style.opacity = 100;
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance 
+    calcDisplayBalance(currentAccount.movements);
+    //Display Summary
+    calcDisplaySumary(currentAccount.movements);
+
+    console.log('Login');
+  }
+});
+
+
+
+
 // const checkDogs = function (dogsJulia, dogsKate) {
 //   const copyDogsJulia = dogsJulia.slice();
 //   copyDogsJulia.splice(0, 1);
@@ -176,19 +209,19 @@ console.log(max);
 
 // Calceulate the dog age in human age using map,reduce,filter
 
-let humanAge = 0;
+// let humanAge = 0;
 
-const doginHumanAge = function (dogages) {
-  const dogAgeToHuman = dogages
-    .map(dogage => dogage <= 2 ?
-      humanAge = 2 * dogage : humanAge = 16 + dogage * 4)
-    .filter(age => age >= 18)
-    .reduce((av, cur, i, arr) => av + cur / arr.length, 0);
+// const doginHumanAge = function (dogages) {
+//   const dogAgeToHuman = dogages
+//     .map(dogage => dogage <= 2 ?
+//       humanAge = 2 * dogage : humanAge = 16 + dogage * 4)
+//     .filter(age => age >= 18)
+//     .reduce((av, cur, i, arr) => av + cur / arr.length, 0);
   
-  return dogAgeToHuman;
-}
+//   return dogAgeToHuman;
+// }
 
-console.log(doginHumanAge([5,2,4,1,15,8,3]));
+// console.log(doginHumanAge([5,2,4,1,15,8,3]));
 
 // convert Euro to USD
 
