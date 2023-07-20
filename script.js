@@ -75,21 +75,6 @@ const createUsernames = function (accs) {
 createUsernames(accounts);
 console.log(accounts);
 
-
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
-
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////
-
 // The account movements
 
 const displayMovements = function (movements) {
@@ -112,26 +97,26 @@ const displayMovements = function (movements) {
 displayMovements(account1.movements);
 
 
-// CALC DISPLAY SUMMARY
+// CALC DISPLAY SUMMARY 
 
-const calcDisplaySumary = function (movements) {
-  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const calcDisplaySumary = function (acc) {
+  const incomes = acc.movements.filter(mov => mov > 0).reduce((ac, mov) => ac + mov, 0);
   labelSumIn.textContent = `${incomes}€`
   //interest summary
-  const interest = movements
+  const interest = acc.movements
   .filter(mov => mov > 0)
-  .map(deposit => deposit * 1.2 / 100)
+  .map(deposit => deposit * acc.interestRate / 100)
   .filter((int, i, arr) => {
     console.log(arr);
     return int >= 1;
 })
-  .reduce((acc, mov) => acc + mov, 0);
+  .reduce((ac, mov) => ac + mov, 0);
 
   labelSumInterest.textContent = `${interest}€`
 }
 
 
-calcDisplaySumary(account1.movements);
+// calcDisplaySumary(account1.movements);
 
 // CALC DISPLAY SUMMARY OUT balace
 
@@ -143,21 +128,23 @@ calcDisplaySumaryOut(account1.movements);
 
 // The account balance
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
-}
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((ac, mov) => ac + mov, 0);
+  
+  labelBalance.textContent = `${acc.balance} EUR`;
+};
 
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1);
 
 // Maximum value from movements
 
-const max = movements.reduce((acc, mov) => acc > mov ? acc: mov, movements[0]);
+// const max = movements.reduce((acc, mov) => acc > mov ? acc: mov, movements[0]);
 
-console.log(max);
+// console.log(max);
 
 
-// Event handler
+// Event handler for accounts -------------------------------------------
+
 let currentAccount;
 
 btnLogin.addEventListener('click', function (e) {
@@ -170,19 +157,52 @@ btnLogin.addEventListener('click', function (e) {
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI a welcome message
     labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
-
+    // show the app 
     containerApp.style.opacity = 100;
+    // disable field focus
+    inputLoginPin.blur();
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
 
     // Display movements
     displayMovements(currentAccount.movements);
     // Display balance 
-    calcDisplayBalance(currentAccount.movements);
+    calcDisplayBalance(currentAccount);
     //Display Summary
-    calcDisplaySumary(currentAccount.movements);
+    calcDisplaySumary(currentAccount);
 
     console.log('Login');
   }
 });
+
+// transfer the funds trought the accounts
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();   // disable the default reloading the page
+
+  const amount = Number(inputTransferAmount.value);
+  const receiiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+  console.log(amount, receiiverAcc);
+
+  if (amount > 0 && amount <= currentAccount.balance && receiiverAcc?.username !== currentAccount.username) {
+    console.log('TRANSFER VALID');
+  }
+});  
+
+
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+// LECTURES
+
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/////////////////////////////////////////////////
 
 
 
@@ -225,11 +245,11 @@ btnLogin.addEventListener('click', function (e) {
 
 // convert Euro to USD
 
-const euroToUsd = 1.1;
-const totalDepositsUSD = movements
-  .filter(mov => mov > 0)
-  .map(mov => mov * euroToUsd)
-  .reduce((acc, mov) => acc + mov, 0);
+// const euroToUsd = 1.1;
+// const totalDepositsUSD = movements
+//   .filter(mov => mov > 0)
+//   .map(mov => mov * euroToUsd)
+//   .reduce((acc, mov) => acc + mov, 0);
 // console.log(totalDepositsUSD);
 
 
