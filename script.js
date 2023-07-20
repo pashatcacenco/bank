@@ -72,6 +72,17 @@ const createUsernames = function (accs) {
  
 };
 
+// update UI function
+
+const updateUI = function (acc) {
+    // Display movements
+    displayMovements(acc.movements);
+    // Display balance 
+    calcDisplayBalance(acc);
+    //Display Summary
+    calcDisplaySumary(acc);
+}
+
 createUsernames(accounts);
 console.log(accounts);
 
@@ -142,6 +153,19 @@ const calcDisplayBalance = function (acc) {
 
 // console.log(max);
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount, value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // add movement 
+    currentAccount.movements.push(amount);
+
+    //update UI
+    updateUI(currentAccount);
+  }
+});
 
 // Event handler for accounts -------------------------------------------
 
@@ -164,12 +188,16 @@ btnLogin.addEventListener('click', function (e) {
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
 
+    // update UI
+    updateUI(currentAccount);
+
+      //these 3 function was wraped into new function above.
     // Display movements
-    displayMovements(currentAccount.movements);
+    // displayMovements(currentAccount.movements);
     // Display balance 
-    calcDisplayBalance(currentAccount);
+    // calcDisplayBalance(currentAccount);
     //Display Summary
-    calcDisplaySumary(currentAccount);
+    // calcDisplaySumary(currentAccount);
 
     console.log('Login');
   }
@@ -182,14 +210,33 @@ btnTransfer.addEventListener('click', function (e) {
 
   const amount = Number(inputTransferAmount.value);
   const receiiverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
-  console.log(amount, receiiverAcc);
+  inputTransferAmount.value = inputTransferTo.value = '';
 
-  if (amount > 0 && amount <= currentAccount.balance && receiiverAcc?.username !== currentAccount.username) {
-    console.log('TRANSFER VALID');
+  if (amount > 0 && receiiverAcc && amount <= currentAccount.balance && receiiverAcc?.username !== currentAccount.username) {
+    // doing the transfer
+
+    currentAccount.movements.push(-amount);
+    receiiverAcc.movements.push(amount);
+
+    updateUI(currentAccount);
   }
 });  
 
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
 
+  // check if credentials of the user is correct
+
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    console.log(index);
+    //Delete account
+    accounts.splice(index, 1);
+    //Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
