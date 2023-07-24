@@ -310,4 +310,11 @@ btnSort.addEventListener('click', function (e) {
 //   .reduce((acc, mov) => acc + mov, 0);
 // console.log(totalDepositsUSD);
 
+// Array from
 
+
+labelBalance.addEventListener('click', function () {
+  const movementUI = Array.from(document.querySelectorAll('.movements__value'), el =>Number(el.textContent));
+
+  console.log(movementUI);
+});
