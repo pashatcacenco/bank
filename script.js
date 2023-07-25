@@ -357,6 +357,7 @@ const dogs = [
 ];
 
 // 1
+console.log('----------------1 ');
 
 const updatedDogsFood = dogs.map(function (dog) {
   const recommendedFood = dog.weight ** 0.75 * 28;
@@ -368,6 +369,7 @@ const updatedDogsFood = dogs.map(function (dog) {
 
 
 // 2
+console.log('----------------2 ')
 
 const sarahDog = function (dogsArr) {
 
@@ -383,6 +385,7 @@ console.log(sarahDog(dogs));
 
 
 // 3
+console.log('----------------3 ')
 
 const ownersEatTooMuch = [];
 const ownersEatTooLittle = [];
@@ -392,17 +395,35 @@ const foodDogcomparation = function (arr) {
     ownersEatTooMuch.push(dog.owners) : ownersEatTooLittle.push(dog.owners))
 };
 foodDogcomparation(dogs);
-console.log(ownersEatTooMuch, ownersEatTooLittle);
+console.log(ownersEatTooMuch.flat(), ownersEatTooLittle.flat());
 //4
+console.log('----------------4 ');
 
 console.log(`"${ownersEatTooMuch.flat().join(' and ')}'s dogs eat to much!!" and "${ownersEatTooLittle.flat().join(' and ')}'s dogs eat to little!!"`);
 
 //5 
-console.log(dogs);
+console.log('----------------5 ');
 
 const recomendedFFD = function(arr) {
-  return arr.forEach(dog => console.log(dog.curFood));
-
-}
+  return arr.forEach(dog => console.log(dog.curFood === dog.updatedFood))
+  };
 
 recomendedFFD(dogs);
+
+
+//6 
+console.log('----------------6 ');
+
+const eatingOk = function (arr) {
+  arr.forEach(dog => {
+    if (dog.curFood >= dog.updatedFood) {
+      console.log(`${dog.owners.join(' and ')}'s dog eats OKay`)
+    }
+  
+  })
+}
+
+eatingOk(dogs);
+
+//7 
+console.log('----------------7 ');
