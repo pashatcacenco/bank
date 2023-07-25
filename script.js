@@ -414,10 +414,20 @@ recomendedFFD(dogs);
 //6 
 console.log('----------------6 ');
 
+const eatingDogs = function (arr) {
+  arr.forEach(dog => console.log(dog.curFood > (dog.updatedFood * 0.9) && dog.curFood < (dog.updatedFood * 1.10)));
+}
+
+eatingDogs(dogs);
+
+
+//7 
+console.log('----------------7 ');
+
 const eatingOk = function (arr) {
   arr.forEach(dog => {
-    if (dog.curFood >= dog.updatedFood) {
-      console.log(`${dog.owners.join(' and ')}'s dog eats OKay`)
+    if (dog.curFood > (dog.updatedFood * 0.9) && dog.curFood < (dog.updatedFood * 1.10)) {
+      console.log(`${dog.owners.join(' and ')}'s dog eats recommended portion`)
     }
   
   })
@@ -425,5 +435,10 @@ const eatingOk = function (arr) {
 
 eatingOk(dogs);
 
-//7 
-console.log('----------------7 ');
+//8 sorting in ascending order
+console.log('----------------8 ');
+
+const shallowCopyOfDogs = dogs.slice();
+shallowCopyOfDogs.sort((dog1, dog2) => dog1.updatedFood - dog2.updatedFood);
+
+console.log(...shallowCopyOfDogs);
