@@ -454,3 +454,39 @@ const shallowCopyOfDogs = dogs.slice();
 shallowCopyOfDogs.sort((dog1, dog2) => dog1.updatedFood - dog2.updatedFood);
 
 console.log(...shallowCopyOfDogs);
+
+
+const arrrrr = [75423542777];
+
+const onevalue = arrrrr
+  .toString()
+  .split('')
+  .map(val => Number(val))
+  .reduce((cur, next) => cur + next, 0);
+  
+
+// console.log([1, 2, 4, 5, 6, 6, 3, 3, 7, 7, 4, 9, 99, 77].set());
+
+
+// Асинхронная операция
+function asyncOperation() {
+  console.log('Шаг 1');
+  setTimeout(() => {
+    console.log('Шаг 2 (асинхронно)');
+  }, 0);
+  console.log('Шаг 3');
+}
+
+// Создание элемента <div>
+const divElement = document.createElement('div');
+
+// Установка класса "box" для элемента <div>
+divElement.classList.add('box');
+
+// Вставка элемента <div> внутри элемента <body>
+document.body.appendChild(divElement);
+console.log(divElement);
+
+const arr3 = [3, 4, 5, 6, 3, 4, 76];
+const numbers = arr3.toString();
+console.log(parseInt(numbers));
